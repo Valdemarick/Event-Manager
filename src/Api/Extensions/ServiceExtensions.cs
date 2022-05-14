@@ -1,4 +1,5 @@
-﻿using Infastructure.Persistence.Contexts;
+﻿using Application.Common.Contexts.Interfaces;
+using Infastructure.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api.Extensions
@@ -19,5 +20,8 @@ namespace Api.Extensions
         public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration configuration) =>
             services.AddDbContext<ApplicationDbContext>(opts => 
                 opts.UseNpgsql(configuration.GetConnectionString("sqlConnection")));
+
+        public static void ConfigureApplicationDbContext(this IServiceCollection services) =>
+            services.AddTransient<IApplicationDbContext, ApplicationDbContext>();
     }
 }
