@@ -1,4 +1,7 @@
-﻿namespace Api.Extensions
+﻿using Infastructure.Persistence.Contexts;
+using Microsoft.EntityFrameworkCore;
+
+namespace Api.Extensions
 {
     public static class ServiceExtensions
     {
@@ -12,5 +15,9 @@
 
         public static void ConfigureIISIntegration(this IServiceCollection services) =>
             services.Configure<IISOptions>(options => { });
+
+        public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration configuration) =>
+            services.AddDbContext<ApplicationDbContext>(opts => 
+                opts.UseNpgsql(configuration.GetConnectionString("sqlConnection")));
     }
 }
