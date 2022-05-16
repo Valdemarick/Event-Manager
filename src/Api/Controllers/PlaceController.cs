@@ -55,5 +55,12 @@ namespace Api.Controllers
             await _service.UpdateAsync(placeDto);
             return NoContent();
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteAsync([FromRoute] int id)
+        {
+            await _service.DeleteAsync(id);
+            return NoContent();
+        }
     }
 }
