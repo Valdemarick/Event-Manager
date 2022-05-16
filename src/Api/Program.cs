@@ -13,6 +13,7 @@ builder.Services.ConfigureCors();
 builder.Services.ConfigureIISIntegration();
 builder.Services.ConfigureSqlContext(builder.Configuration);
 builder.Services.ConfigureApplicationDbContext();
+builder.Services.ConfigureAutoMapper();
 
 var app = builder.Build();
 

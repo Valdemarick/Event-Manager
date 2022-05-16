@@ -1,6 +1,13 @@
-﻿using Application.Common.Contexts.Interfaces;
+﻿using Application.Common.Interfaces.Contexts;
+using Application.Common.Interfaces.Repositories;
+using Application.Common.Interfaces.Services;
+using Application.Common.Mappings;
 using Infastructure.Persistence.Contexts;
+using Infastructure.Persistence.Repositories;
+using Infastructure.Services;
 using Microsoft.EntityFrameworkCore;
+using AutoMapper;
+using System.Reflection;
 
 namespace Api.Extensions
 {
@@ -18,10 +25,13 @@ namespace Api.Extensions
             services.Configure<IISOptions>(options => { });
 
         public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration configuration) =>
-            services.AddDbContext<ApplicationDbContext>(opts => 
+            services.AddDbContext<ApplicationDbContext>(opts =>
                 opts.UseNpgsql(configuration.GetConnectionString("sqlConnection")));
 
         public static void ConfigureApplicationDbContext(this IServiceCollection services) =>
-            services.AddTransient<IApplicationDbContext, ApplicationDbContext>();
+            services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
+
+        public static void ConfigureAutoMapper(this IServiceCollection services) =>
+            services.AddAutoMapper(Assembly.Load("Application"));
     }
 }
