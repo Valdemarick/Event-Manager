@@ -43,5 +43,17 @@ namespace Api.Controllers
             var created = await _service.CreateAsync(placeDto);
             return CreatedAtAction(nameof(GetByIdAsync), new {id = created.Id}, created);
         }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateAsync([FromBody] PlaceForUpdateDto placeDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return UnprocessableEntity(placeDto);
+            }
+
+            await _service.UpdateAsync(placeDto);
+            return NoContent();
+        }
     }
 }
