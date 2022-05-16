@@ -33,5 +33,19 @@ namespace Api.Extensions
 
         public static void ConfigureAutoMapper(this IServiceCollection services) =>
             services.AddAutoMapper(Assembly.Load("Application"));
+
+        public static void ConfigureRepositories(this IServiceCollection services)
+        {
+            services.AddScoped<IPlaceRepository, PlaceRepository>();
+            //services.AddScoped<IOrganizerRepository, OrganizerRepository>();
+            //services.AddScoped<IEventRepository, EventRepository>();
+        }
+
+        public static void ConfigureServices(this IServiceCollection services)
+        {
+            services.AddScoped<IPlaceService, PlaceService>();
+            //services.AddScoped<IOrganizerService, OrganizerService>();
+            //services.AddScoped<IEventService, EventService>();
+        }
     }
 }

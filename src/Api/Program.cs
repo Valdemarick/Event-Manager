@@ -14,6 +14,8 @@ builder.Services.ConfigureIISIntegration();
 builder.Services.ConfigureSqlContext(builder.Configuration);
 builder.Services.ConfigureApplicationDbContext();
 builder.Services.ConfigureAutoMapper();
+builder.Services.ConfigureRepositories();
+builder.Services.ConfigureServices();
 
 var app = builder.Build();
 
