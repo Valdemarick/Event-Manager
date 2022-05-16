@@ -1,4 +1,5 @@
 ﻿using Application.Common.Interfaces.Services;
+using Application.Models.Place;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
@@ -19,7 +20,8 @@ namespace Api.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetByIdAsync(int id)
+        [ActionName(nameof(GetByIdAsync))]
+        public async Task<IActionResult> GetByIdAsync([FromRoute] int id)
         {
             var place = await _service.GetByIdAsync(id);
             if (place == null)
@@ -28,6 +30,18 @@ namespace Api.Controllers
             }
 
             return Ok(place);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateAsync([FromBody] PlaceForCreationDto placeDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return UnprocessableEntity(placeDto);
+            }
+
+            var created = await _service.CreateAsync(placeDto);
+            return CreatedAtAction(nameof(GetByIdAsync), new {id = created.Id}, created);
         }
     }
 }
