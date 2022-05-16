@@ -6,7 +6,7 @@ namespace Application.Common.Interfaces.Services
     {
         Task<IEnumerable<PlaceDto>> GetAllAsync();
         Task<PlaceDto> GetByIdAsync(int id);
-        Task<PlaceDto> CreateAsync(PlaceDto placeDto);
+        Task<PlaceDto> CreateAsync(PlaceForCreationDto placeDto);
         Task UpdateAsync(PlaceForUpdateDto placeForUpdateDto);
         Task DeleteAsync(int id);
     }

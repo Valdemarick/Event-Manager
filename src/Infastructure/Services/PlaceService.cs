@@ -29,7 +29,7 @@ namespace Infastructure.Services
             return _mapper.Map<PlaceDto>(place);
         }
 
-        public async Task<PlaceDto> CreateAsync(PlaceDto place)
+        public async Task<PlaceDto> CreateAsync(PlaceForCreationDto place)
         {
             var entity = _mapper.Map<Place>(place);
             var created = await _repository.CreateAsync(entity);
