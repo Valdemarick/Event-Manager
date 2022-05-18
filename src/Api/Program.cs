@@ -1,5 +1,6 @@
 using Api.Extensions;
 using Microsoft.AspNetCore.HttpOverrides;
+using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +17,8 @@ builder.Services.ConfigureApplicationDbContext();
 builder.Services.ConfigureAutoMapper();
 builder.Services.ConfigureRepositories();
 builder.Services.ConfigureServices();
+
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 var app = builder.Build();
 
