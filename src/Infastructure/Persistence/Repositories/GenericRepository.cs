@@ -2,6 +2,7 @@
 using Application.Common.Interfaces.Repositories;
 using Domain.Common;
 using Microsoft.EntityFrameworkCore;
+using Application.Common.Exceptions;
 
 namespace Infastructure.Persistence.Repositories
 {
@@ -18,9 +19,8 @@ namespace Infastructure.Persistence.Repositories
 
         public virtual async Task<TEntity?> GetByIdAsync(int id) =>
             await Context.Set<TEntity>()
-            .Where(e => e.Id == id)
             .AsNoTracking()
-            .FirstOrDefaultAsync();
+            .SingleOrDefaultAsync(e => e.Id == id);
 
         public virtual async Task<TEntity> CreateAsync(TEntity entity)
         {
@@ -35,7 +35,7 @@ namespace Infastructure.Persistence.Repositories
             var isExists = await Context.Set<TEntity>().AnyAsync(e => e.Id == entity.Id);
             if (!isExists)
             {
-                return;
+                throw new NotFoundException("An entity doesn't exist in the database");
             }
 
             Context.Set<TEntity>().Update(entity);
@@ -47,7 +47,7 @@ namespace Infastructure.Persistence.Repositories
             var existing = await Context.Set<TEntity>().FindAsync(id);
             if (existing == null)
             {
-                return;
+                throw new NotFoundException("An entity doesn't exist in the database");
             }
 
             Context.Set<TEntity>().Remove(existing);

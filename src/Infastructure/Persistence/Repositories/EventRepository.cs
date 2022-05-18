@@ -20,6 +20,7 @@ namespace Infastructure.Persistence.Repositories
             await Context.Set<Event>()
             .Include(e => e.Organizer)
             .Include(e => e.Place)
-            .FirstOrDefaultAsync();
+            .AsNoTracking()
+            .SingleOrDefaultAsync(e => e.Id == id);
     }
 }
